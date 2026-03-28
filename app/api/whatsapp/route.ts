@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     // Use the stable 2.5 model and inject a highly specific persona
     const model = genAI.getGenerativeModel({ 
       model: "gemini-2.5-flash",
-      systemInstruction: "You are an elite software engineering assistant specializing in Next.js, Go, and highly secure Fintech architecture. You provide clean, minimalist code. Keep explanations extremely concise for WhatsApp. Assume the user is a professional developer."
+      
     });
 
     // 1. Ask Gemini for the answer
