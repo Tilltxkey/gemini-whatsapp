@@ -11,16 +11,16 @@ export async function POST(req: NextRequest) {
     const incomingMsg = formData.get('Body') as string;
     const fromNumber = formData.get('From') as string;
 
-    // 1. Initialize Gemini 2.5 Flash-Lite (Best for Free Tier)
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-    
-    // 2. Generate AI Response
+    // Gemini 1.5 Flash - stable and free tier friendly
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    // Generate AI response
     const result = await model.generateContent(incomingMsg);
     const aiResponse = result.response.text();
 
-    // 3. Send back to WhatsApp via Twilio
+    // Send reply back to WhatsApp via Twilio
     await client.messages.create({
-      from: process.env.TWILIO_PHONE_NUMBER,
+      from: process.env.TWILIO_PHONE_NUMBER as string,
       to: fromNumber,
       body: aiResponse,
     });
