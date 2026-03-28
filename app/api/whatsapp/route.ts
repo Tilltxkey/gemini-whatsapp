@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
     const incomingMsg = formData.get('Body') as string;
     const fromNumber = formData.get('From') as string;
 
-    // Gemini 1.5 Flash - stable and free tier friendly
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // gemini-2.0-flash works on free tier
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     // Generate AI response
     const result = await model.generateContent(incomingMsg);
