@@ -11,8 +11,7 @@ export async function POST(req: NextRequest) {
     const incomingMsg = formData.get('Body') as string;
     const fromNumber = formData.get('From') as string;
 
-    // Try 1.5 instead of 2.0 to see if the quota activates
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "models/gemini-2.5-flash" });
 
     // Generate AI response
     const result = await model.generateContent(incomingMsg);
