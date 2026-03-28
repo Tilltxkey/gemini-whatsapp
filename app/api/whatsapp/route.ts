@@ -17,12 +17,17 @@ export async function POST(req: NextRequest) {
     const result = await model.generateContent(incomingMsg);
     const aiResponse = result.response.text();
 
-    // Send reply back to WhatsApp via Twilio
-    await client.messages.create({
-      from: process.env.TWILIO_PHONE_NUMBER as string,
-      to: fromNumber,
-      body: aiResponse,
+    // Split the AI response into chunks of 1500 characters
+    const chunks = aiResponse.match(/[\s\S]{1,1500}/g) || [];
+
+    // Send each chunk as a separate message
+    for (const chunk of chunks) {
+      await client.messages.create({
+        from: process.env.TWILIO_PHONE_NUMBER as string,
+        to: fromNumber,
+        body: chunk,
     });
+}
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
